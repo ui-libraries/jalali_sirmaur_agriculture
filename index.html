@@ -61,7 +61,7 @@
           },
           geojsonPoints: {
             type: "geojson",
-            data: 'data/sites.geojson'
+            data: "data/sites.geojson"
           }
         },
         layers: [
@@ -121,6 +121,7 @@
     document.body.appendChild(tooltip);
 
     map.on('load', () => {
+
       // Initialize feature states for hover effect
       map.setFeatureState({ source: 'geojsonPoints', id: 0 }, { hover: false });
 
