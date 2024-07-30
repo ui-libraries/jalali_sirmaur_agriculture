@@ -62,7 +62,13 @@
           geojsonPoints: {
             type: "geojson",
             data: "data/sites.geojson"
+          },
+/*          
+          roads: {
+            type: "geojson",
+            data: "data/roads.geojson"
           }
+*/            
         },
         layers: [
           {
@@ -70,6 +76,17 @@
             type: "raster",
             source: "topo",
           },
+/*          
+          {
+            id: "roads",
+            type: "line",
+            source: "roads",
+            paint: {
+              "line-color": "#FF5733",
+              "line-width": 2
+            }
+          },
+*/          
           {
             id: "points",
             type: "circle",
