@@ -1,0 +1,18 @@
+{
+"type": "FeatureCollection",
+"name": "sites",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "id": 1, "properties": { "Name": "Sainj", "LAT": 30.724417, "LONG": 77.4897654 }, "geometry": { "type": "Point", "coordinates": [ 77.48977, 30.72442 ] } },
+{ "type": "Feature", "id": 2, "properties": { "Name": "Andheri", "LAT": 30.718022, "LONG": 77.459002 }, "geometry": { "type": "Point", "coordinates": [ 77.459, 30.71802 ] } },
+{ "type": "Feature", "id": 3, "properties": { "Name": "Water source (Andheri)", "LAT": 30.714967, "LONG": 77.458105 }, "geometry": { "type": "Point", "coordinates": [ 77.45811, 30.71497 ] } },
+{ "type": "Feature", "id": 4, "properties": { "Name": "Gutlog", "LAT": 30.714009, "LONG": 77.399261 }, "geometry": { "type": "Point", "coordinates": [ 77.39926, 30.71401 ] } },
+{ "type": "Feature", "id": 5, "properties": { "Name": "Gutlog (2)", "LAT": 30.712735, "LONG": 77.401662 }, "geometry": { "type": "Point", "coordinates": [ 77.40166, 30.71273 ] } },
+{ "type": "Feature", "id": 6, "properties": { "Name": "Gutlog (3)", "LAT": 30.714289, "LONG": 77.402832 }, "geometry": { "type": "Point", "coordinates": [ 77.40283, 30.71429 ] } },
+{ "type": "Feature", "id": 7, "properties": { "Name": "Gutlog (4)", "LAT": 30.733774, "LONG": 77.38639 }, "geometry": { "type": "Point", "coordinates": [ 77.38639, 30.73377 ] } },
+{ "type": "Feature", "id": 8, "properties": { "Name": "Bhujond", "LAT": 30.732629, "LONG": 77.385884 }, "geometry": { "type": "Point", "coordinates": [ 77.38588, 30.73263 ] } },
+{ "type": "Feature", "id": 9, "properties": { "Name": "Bijender", "LAT": 30.728219, "LONG": 77.394328 }, "geometry": { "type": "Point", "coordinates": [ 77.39433, 30.72822 ] } },
+{ "type": "Feature", "id": 10, "properties": { "Name": "Water source (Sangrah)", "LAT": 30.728191, "LONG": 77.51048 }, "geometry": { "type": "Point", "coordinates": [ 77.51048, 30.72819 ] } },
+{ "type": "Feature", "id": 11, "properties": { "Name": "Arat", "LAT": 30.729201, "LONG": 77.499311 }, "geometry": { "type": "Point", "coordinates": [ 77.49931, 30.7292 ] } }
+]
+}
