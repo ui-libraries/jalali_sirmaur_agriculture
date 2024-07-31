@@ -46,7 +46,7 @@
       container: 'map', // container id
       style: {
         version: 8,
-        glyphs: "mapbox://fonts/mapbox/{fontstack}/{range}.pbf",
+        glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
         sources: {
           topo: {
             type: "raster",
@@ -79,6 +79,10 @@
           villages: {
             type: 'geojson',
             data: 'data/villages.geojson'
+          },
+          headquarters: {
+            type: 'geojson',
+            data: 'data/hqs.geojson'
           }
         },
         layers: [
@@ -135,14 +139,36 @@
             source: "villages",
             layout: {
               "text-field": ["get", "vilname"],
-              "text-size": 12,
-              "text-offset": [0, 0.6],
+              "text-size": 10,
+              "text-offset": [0, 0],
               "text-anchor": "top"
             },
             paint: {
               "text-color": "#000000"
             }
           },
+          {
+            id: "headquarters-points",
+            type: "circle",
+            source: "headquarters",
+            paint: {
+              "circle-opacity": 0 // Makes the points invisible
+            }
+          },
+          {
+            id: "headquarters-labels",
+            type: "symbol",
+            source: "headquarters",
+            layout: {
+              "text-field": ["get", "dist_hqnm"],
+              "text-size": 12,
+              "text-offset": [0, 0],
+              "text-anchor": "top"
+            },
+            paint: {
+              "text-color": "#000000"
+            }
+          },          
           {
             id: "points",
             type: "circle",
