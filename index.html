@@ -46,6 +46,7 @@
       container: 'map', // container id
       style: {
         version: 8,
+        glyphs: "mapbox://fonts/mapbox/{fontstack}/{range}.pbf",
         sources: {
           topo: {
             type: "raster",
@@ -159,7 +160,6 @@
             }
           }
         ],
-        glyphs: "https://fonts.openmaptiles.org/{fontstack}/{range}.pbf",
         terrain: {
           source: "terrainSource",
           exaggeration: 0.006,
