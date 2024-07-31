@@ -41,7 +41,7 @@
   <script>
     let protocol = new pmtiles.Protocol();
     maplibregl.addProtocol("pmtiles", protocol.tile);
-  
+
     const map = new maplibregl.Map({
       container: 'map', // container id
       style: {
@@ -63,12 +63,22 @@
             type: "geojson",
             data: "data/sites.geojson"
           },
-/*          
           roads: {
             type: "geojson",
             data: "data/roads.geojson"
+          },
+          water: {
+            type: 'geojson',
+            data: 'data/rivers.geojson'
+          },
+          rails: {
+            type: 'geojson',
+            data: 'data/rails.geojson'
+          },
+          villages: {
+            type: 'geojson',
+            data: 'data/villages.geojson'
           }
-*/            
         },
         layers: [
           {
@@ -76,17 +86,62 @@
             type: "raster",
             source: "topo",
           },
-/*          
+          {
+            id: "water",
+            type: "fill",
+            source: "water",
+            paint: { "fill-color": "#a6cee3" },
+          },
           {
             id: "roads",
             type: "line",
             source: "roads",
             paint: {
-              "line-color": "#FF5733",
-              "line-width": 2
+              "line-color": "dimgray",
+              "line-width": [
+                "match",
+                ["get", "class_code"],
+                "1", 1,
+                "2", 0.5,
+                "3", 0.4,
+                "4", 0.3,
+                "5", 0.2,
+                "6", 0.1,
+                0.1
+              ]
             }
           },
-*/          
+          {
+            id: "rails",
+            type: "line",
+            source: "rails",
+            paint: {
+              "line-color": "saddlebrown",
+              "line-width": 1
+            }
+          },
+          {
+            id: "villages-points",
+            type: "circle",
+            source: "villages",
+            paint: {
+              "circle-opacity": 0 // Makes the points invisible
+            }
+          },
+          {
+            id: "villages-labels",
+            type: "symbol",
+            source: "villages",
+            layout: {
+              "text-field": ["get", "vilname"],
+              "text-size": 12,
+              "text-offset": [0, 0.6],
+              "text-anchor": "top"
+            },
+            paint: {
+              "text-color": "#000000"
+            }
+          },
           {
             id: "points",
             type: "circle",
@@ -96,14 +151,15 @@
               "circle-color": [
                 "case",
                 ["boolean", ["feature-state", "hover"], false],
-                "yellow", // color on hover
-                "rgba(255, 87, 51, 0.5)" // color when not hovered
+                "yellow",
+                "rgba(30, 144, 255, 0.5)"
               ],
               "circle-stroke-width": 2,
-              "circle-stroke-color": "#FF5733"
+              "circle-stroke-color": "dodgerblue"
             }
           }
         ],
+        glyphs: "https://fonts.openmaptiles.org/{fontstack}/{range}.pbf",
         terrain: {
           source: "terrainSource",
           exaggeration: 0.006,
@@ -116,7 +172,7 @@
       maxPitch: 85,
       maxZoom: 14
     });
-  
+
     map.addControl(
       new maplibregl.NavigationControl({
         visualizePitch: true,
@@ -124,7 +180,7 @@
         showCompass: true,
       })
     );
-  
+
     map.addControl(
       new maplibregl.TerrainControl({
         source: "terrainSource",
@@ -138,35 +194,27 @@
     document.body.appendChild(tooltip);
 
     map.on('load', () => {
-
       // Initialize feature states for hover effect
       map.setFeatureState({ source: 'geojsonPoints', id: 0 }, { hover: false });
 
       map.on('mouseenter', 'points', (e) => {
-        // Change the cursor to a pointer
         map.getCanvas().style.cursor = 'pointer';
 
         if (e.features.length > 0) {
           const featureId = e.features[0].id;
-          
-          // Update the feature state to indicate hover
           map.setFeatureState({ source: 'geojsonPoints', id: featureId }, { hover: true });
 
-          // Set the tooltip content
           const name = e.features[0].properties.Name;
           tooltip.innerHTML = name;
 
-          // Get the mouse position
           const coordinates = e.lngLat;
-
-          // Adjust tooltip position
           const mapCanvas = map.getCanvasContainer();
           const canvasRect = mapCanvas.getBoundingClientRect();
           const mapOffset = [canvasRect.left, canvasRect.top];
           const point = map.project(coordinates);
 
           tooltip.style.left = `${point.x - mapOffset[0]}px`;
-          tooltip.style.top = `${point.y - mapOffset[1] - 10}px`; // Adjusted to position above the point
+          tooltip.style.top = `${point.y - mapOffset[1] - 10}px`;
           tooltip.style.display = 'block';
         }
       });
@@ -180,21 +228,17 @@
           const point = map.project(coordinates);
 
           tooltip.style.left = `${point.x - mapOffset[0]}px`;
-          tooltip.style.top = `${point.y - mapOffset[1] - 10}px`; // Adjusted to position above the point
+          tooltip.style.top = `${point.y - mapOffset[1] - 10}px`;
         }
       });
 
       map.on('mouseleave', 'points', () => {
-        // Reset the cursor to default
         map.getCanvas().style.cursor = '';
-
-        // Remove the hover state from features
         const features = map.queryRenderedFeatures({ layers: ['points'] });
         features.forEach(feature => {
           map.setFeatureState({ source: 'geojsonPoints', id: feature.id }, { hover: false });
         });
 
-        // Hide the tooltip
         tooltip.style.display = 'none';
       });
     });
